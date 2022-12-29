@@ -12,19 +12,20 @@ class Controller {
     const model = this.#model;
     // отображаем ту страницу, на которой мы сейчас находимся
     switch (model.getPage()) {
-      case "start": {
+      case 'start': {
         const topic = this.#view.renderSelectTopicPage(model.getTopics());
         model.chooseTopic(topic);
         return this.run();
       }
       // выбрана тема
-      // getQuestions(), stopGame() - from model
-      case "choose-topic": {
+      // getQuestions() - заменила на chooseQuestion из модели
+      // stopGame() - from model
+      case 'choose-topic': {
         const choice = this.#view.renderSelectTopicPage(
           this.#model.chooseTopic()
         );
         if (choice) {
-          this.#model.getQuestions(choice);
+          this.#model.chooseQuestion(choice);
         } else {
           this.#model.stopGame();
         }
@@ -32,18 +33,20 @@ class Controller {
       }
       // дан ответ
       // renderGiveAnswer() - from view
-      // gaveAnswer(), rightAnswer(), wrongAnswer - from model
-      case "gave-answer": {
+      // gaveAnswer() - from model (здесь, как я понимаю, должен отражаться первый вопрос игроку из топика)
+      // rightAnswer() - заменила на correstAnswer из модели
+      // wrongAnswer() - from model (если ответ неверный)
+      case 'gave-answer': {
         const answer = this.#view.renderGiveAnswer(this.#model.gaveAnswer());
         if (answer) {
-          this.#model.rightAnswer();
+          this.#model.correstAnswer();
         } else {
           this.#model.wrongAnswer();
         }
         return this.run();
       }
       default:
-        throw new Error("Wrong page");
+        throw new Error('Wrong page');
     }
   }
 }
