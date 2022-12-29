@@ -1,36 +1,25 @@
-const fs = require("fs");
-const readline = require("readline-promise").default;
-
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
+const { Select } = require("enquirer");
+const { Input } = require("enquirer");
+const { prompt } = require("enquirer");
 
 class View {
-  constructor() {}
+  showTopics(topics) {
+    // const topics = await this.model.getTopics()
 
-  async showTopics(arr) {
-    const topic = await rl.questionAsync(
-      `\nВыберите категорию!\n\n${arr[0]}\n${arr[1]}\n${arr[2]}\n\n`
-    );
-    return topic;
+    const promptNew = new Select({
+      name: "input",
+      message: "choose theme",
+      choices: topics,
+    });
+
+    return promptNew.run();
   }
 
-  async getQuestion(question) {
-    const points = [];
-    for (let i = 0; i < arr.length - 1; i += 2) {
-      const answer = await int.questionAsync(`\n${question[i]}\n\n`);
-      if (answer.toLowerCase() === arr[i + 1]) {
-        points.push(1);
-      } else points.push(0);
-    }
-    return points;
-  }
+  async ShowQuestion(questions) {
+    const question = questions;
 
-  async showRes(points) {
-    const sum = points.reduce((acc, el) => acc + el, 0);
-    // if (sum >= 30) return `Ты выиграл с результатом ${sum} очков`;
-    return `Красавчик, ты набрал ${sum} очков! Дальше - больше`;
+    const answers = await prompt(question);
+    return Object.values(answers);
   }
 }
 
