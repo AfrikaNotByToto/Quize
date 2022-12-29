@@ -20,11 +20,17 @@ class View {
     const points = [];
     for (let i = 0; i < arr.length - 1; i += 2) {
       const answer = await int.questionAsync(`\n${question[i]}\n\n`);
-      if (answer === arr[i + 1]) {
-        points.push(10);
+      if (answer.toLowerCase() === arr[i + 1]) {
+        points.push(1);
       } else points.push(0);
     }
     return points;
+  }
+
+  async showRes(points) {
+    const sum = points.reduce((acc, el) => acc + el, 0);
+    // if (sum >= 30) return `Ты выиграл с результатом ${sum} очков`;
+    return `Красавчик, ты набрал ${sum} очков! Дальше - больше`;
   }
 }
 
