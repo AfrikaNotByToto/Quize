@@ -1,36 +1,21 @@
-const Model = require("./Model");
-const View = require("./View");
+const rl = require('readline-sync');
 
 class Controller {
-  #model;
-
-  #view;
-
   constructor(model, view) {
-    this.#model = model;
-    this.#view = view;
+    this.model = model;
+    this.view = view;
   }
 
   async run() {
-    const topics = await this.model.chooseTopic();
-    const theme = await this.view.showTopics(topics); //из вью
-    const questions = await this.model.chooseQuestion(theme);
-    const sortQA = await this.view.ShowQuestion(questions); //из вью
-    const correctAnswers = await this.model.correstAnswer(theme);
-    let result = 0;
-    let pass = sortQA.length;
-    for (let i = 0; i < sortQA.length; i++) {
-      if (
-        sortQA[i].toString().toLowerCase() ===
-        correctAnswers[i].toString().toLowerCase()
-      ) {
-        result += 1;
-      }
-    }
-    console.log(`\n\nВы ответили на ${result} вопросов из ${pass} \n\n`);
+    const menu = await this.model.makeMenu();
+    const intro = this.view.intro();
+    const viewMenu = await this.view.viewMenu(menu);
+    const questions = await this.model.makeQuest(viewMenu);
+    const viewQuestions = await this.view.viewQuest(questions);
+    const game = await this.view.game(viewQuestions);
+    const outro = await this.view.outro();
   }
 }
-
 //   run() {
 //     const model = this.#model;
 //     // отображаем ту страницу, на которой мы сейчас находимся

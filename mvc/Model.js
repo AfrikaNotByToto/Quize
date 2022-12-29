@@ -1,54 +1,36 @@
-const fs = require('fs').promises;
+const fs = require('fs');
 
 class Model {
-  async chooseTopic() {
-    const topic = await fs.readdir('../topics', 'utf-8');
-    console.log(topic.map((el) => el.split('_')[0]));
-  }
-
-  async chooseQuestion(topic) {
-    const questions = await fs.readFile(
-      `../topics/${topic}_flashcard_data.txt`,
-      'utf-8'
-    );
-    const splitQuestion = questions.split('\n\n').map((el) => el.split('\n'));
-    const result = [];
-    for (let i = 0; i < splitQuestion.length; i += 1) {
-      result.push({
-        type: 'input',
-        name: `quest${i}`,
-        message: splitQuestion[i][0],
-        answer: splitQuestion[i][1],
+  makeMenu() {
+    return new Promise((res, rej) => {
+      fs.readdir('./topics', (err, data) => {
+        if (err) rej(err);
+        res(data);
       });
-    }
-    return result;
+    });
   }
 
-  async correstAnswer(topic) {
-    const questions = await fs.readFile(
-      `../topics/${topic}_flashcard_data.txt`,
-      'utf-8'
-    );
-    const splitQuestion = questions.split('\n\n').map((el) => el.split('\n'));
-    const result = [];
-    for (let i = 0; i < splitQuestion.length; i += 1) {
-      result.push(splitQuestion[i][1]);
-    }
-    return result;
+  makeQuest(path) {
+    return new Promise((res, rej) => {
+      fs.readFile(path, 'utf-8', (err, data) => {
+        if (err) rej(err);
+        res(data);
+      });
+    });
   }
-  // Сначала приложение находится на стартовой странице выбора темы.
-  // Подумай, какие ещё страницы будут в твоём приложении?
-  // #page = 'select-topic';
-
-  // Подумай какие данные будут нужны View, чтобы рендерить эти страницы.
-  // Исходя из этих данных определись какие поля будет содержать модель.
-
-  // chooseTopic(topic) {
-  //   // Тема выбрана, сделай необходимые изменения в модели (в т.ч. измени this.page).
-  //   // Чтобы сделать эти изменения подумай какая следующая страница будет отображена
-  //   // и какие данные нужны View, чтобы отрендерить эту страницу
-  //   // ...
-  // }
 }
+// Сначала приложение находится на стартовой странице выбора темы.
+// Подумай, какие ещё страницы будут в твоём приложении?
+// #page = 'select-topic';
+
+// Подумай какие данные будут нужны View, чтобы рендерить эти страницы.
+// Исходя из этих данных определись какие поля будет содержать модель.
+
+// chooseTopic(topic) {
+//   // Тема выбрана, сделай необходимые изменения в модели (в т.ч. измени this.page).
+//   // Чтобы сделать эти изменения подумай какая следующая страница будет отображена
+//   // и какие данные нужны View, чтобы отрендерить эту страницу
+//   // ...
+// }
 
 module.exports = Model;
