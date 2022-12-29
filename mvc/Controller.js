@@ -14,9 +14,9 @@ class Controller {
   async run() {
     const topics = await this.model.chooseTopic();
     const theme = await this.view.showTopics(topics); //из вью
-    const questions = await this.model.chooseQuestion(topic);
+    const questions = await this.model.chooseQuestion(theme);
     const sortQA = await this.view.ShowQuestion(questions); //из вью
-    const correctAnswers = await this.model.correstAnswer(topic);
+    const correctAnswers = await this.model.correstAnswer(theme);
     let result = 0;
     let pass = sortQA.length;
     for (let i = 0; i < sortQA.length; i++) {
