@@ -30,7 +30,7 @@ class Controller {
         }
         return this.run();
       }
-      // дан ответ
+      // дан ответ на вопрос
       // renderGiveAnswer() - from view
       // gaveAnswer(), rightAnswer(), wrongAnswer - from model
       case "gave-answer": {
