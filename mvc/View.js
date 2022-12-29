@@ -15,6 +15,17 @@ class View {
     );
     return topic;
   }
+
+  async getQuestion(question) {
+    const points = [];
+    for (let i = 0; i < arr.length - 1; i += 2) {
+      const answer = await int.questionAsync(`\n${question[i]}\n\n`);
+      if (answer === arr[i + 1]) {
+        points.push(10);
+      } else points.push(0);
+    }
+    return points;
+  }
 }
 
 // const readlineSync = require('readline-sync');
