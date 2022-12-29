@@ -23,6 +23,19 @@ class Model {
     }
     return result;
   }
+
+  async correstAnswer(topic) {
+    const questions = await fs.readFile(
+      `../topics/${topic}_flashcard_data.txt`,
+      'utf-8'
+    );
+    const splitQuestion = questions.split('\n\n').map((el) => el.split('\n'));
+    const result = [];
+    for (let i = 0; i < splitQuestion.length; i += 1) {
+      result.push(splitQuestion[i][1]);
+    }
+    return result;
+  }
   // Сначала приложение находится на стартовой странице выбора темы.
   // Подумай, какие ещё страницы будут в твоём приложении?
   // #page = 'select-topic';
