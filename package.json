@@ -1,7 +1,7 @@
 {
   "name": "flashcards",
   "version": "1.0.0",
-  "description": "",
+  "description": "Вам предстоит создать приложение для флэш-карт, которое должно работать как показано на Рисунке 1. Сначала вы напишете его так как считаете нужным. Постарайтесь оставить не менее двух часов для того чтобы успеть отрефакторить свой код. Как именно его нужно будет отрефакторить описано в релизе 2.",
   "main": "runner.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,11 +10,21 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "chalk": "^4.1.2",
+    "clm": "^1.2.3",
     "readline-sync": "^1.4.10"
   },
   "devDependencies": {
-    "eslint": "^8.23.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.26.0"
-  }
+    "eslint": "^8.30.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.24.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AfrikaNotByToto/Quize.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AfrikaNotByToto/Quize/issues"
+  },
+  "homepage": "https://github.com/AfrikaNotByToto/Quize#readme"
 }
