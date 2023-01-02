@@ -1,4 +1,5 @@
 const chalk = require('chalk');
+const { arch } = require('os');
 const rl = require('readline-sync');
 const Controller = require('./Controller');
 const Model = require('./Model');
@@ -7,15 +8,15 @@ class View {
   viewMenu(data) {
     let arr = data;
     let path = `./topics/${
-      arr[arr.length - 1]
+      arr[Math.floor(Math.random() * (arr.length - 1 - 0) + 0)]
     }`;
     const n = rl.question(`
-     Выбери тему:
-     1 
-     2 
-     3 Какое ты мороженое?
-     
+     1 Тест на знание себя бесплатно и без регистрации.
+     2 Кто же ты такой?
+     3 Хочешь узнать про себя больше?
+
      `);
+    console.clear();
     if (n === 1) path = `./topics/${arr[n]}`;
     if (n === 2) path = `./topics/${arr[n]}`;
     if (n === 3) path = `./topics/${arr[n]}`;
@@ -34,22 +35,26 @@ class View {
 
   async game(viewQuestions) {
     let obj = viewQuestions;
-
+    let score = 0;
     for (let key in obj) {
-      let question = rl.question(`
+      let question = rl.question(chalk.bold.blue(`
        ${key}
-       Твой ответ: `);
+       Твой ответ: `));
       if (question === obj[key]) {
+        score += 1;
         console.log(`\n       Точно 🤩`);
       } else {
-        console.log(`\n       А вот и нет, правильно: ` + obj[key]);
+        console.log(chalk.red('\n       А вот и нет: ') + obj[key]);
       }
     }
+    console.log(`Твой результат: ${chalk.cyan(score)}`);
   }
 
   async intro() {
     console.clear();
-    rl.question(`                     Поиграем?`);
+    const name = rl.question(chalk.magenta('                    Как тебя зовут?\n'));
+    console.clear();
+    rl.question(`                     Поиграем?, ${chalk.magenta(name)}`);
   }
 
   async outro() {
@@ -57,11 +62,8 @@ class View {
       const model = new Model();
       const view = new View();
       const controller = new Controller(model, view);
-      const again = rl.question(`      Повторим? 🔁
-       Нажми 1, если согласен😉
-         
-       `);
-      if (again === 1) {
+      const again = rl.question(chalk.blue('      Повторим? 🔁'));
+      if (again === 'да' || again === 'Да') {
         console.clear();
         controller.run();
       }
